@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pankaj Yadav - Portfolio</title>
+    <script>
+        // Redirect to main page with hash
+        const path = window.location.pathname.slice(1);
+        if (path && path !== 'index.html') {
+            window.location.replace(`/index.html#${path}`);
+        } else {
+            window.location.replace('/index.html');
+        }
+    </script>
+</head>
+<body>
+    <p>Redirecting...</p>
+</body>
+</html>
