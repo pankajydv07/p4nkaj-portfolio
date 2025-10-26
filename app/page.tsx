@@ -14,6 +14,7 @@ import {
   Sun
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ParticleBackground from '../components/ParticleBackground';
 
 // The content comes verbatim from reference.tsx but adapted for Next.js app router page
 
@@ -66,6 +67,21 @@ const skills = {
   "Web & Mobile": ["React", "Node.js", "Express", "React Native", "Tailwind CSS", "REST APIs"],
   "Database & Cloud": ["MongoDB", "MySQL", "Azure", "GCP", "Vercel", "Docker"]
 };
+
+const skillLevels = [
+  { name: "JavaScript", level: 90 },
+  { name: "React", level: 88 },
+  { name: "Node.js", level: 85 },
+  { name: "Python", level: 82 },
+  { name: "MongoDB", level: 80 },
+  { name: "Tailwind CSS", level: 90 },
+  { name: "Express", level: 83 },
+  { name: "SQL", level: 78 },
+  { name: "Azure/GCP", level: 75 },
+  { name: "REST APIs", level: 87 },
+  { name: "React Native", level: 80 },
+  { name: "Docker", level: 72 }
+];
 
 interface Experience {
   id: number;
@@ -209,22 +225,110 @@ const CustomCursor = () => {
 export default function Portfolio() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true); // Default to dark mode
+  const [showTerminal, setShowTerminal] = useState(false);
+  const [command, setCommand] = useState('');
+  const [terminalOutput, setTerminalOutput] = useState<string[]>([
+    '<span class="text-teal-400">Welcome to Pankaj\'s Portfolio Terminal v1.0</span>',
+    '<span class="text-slate-400">Type "help" for available commands</span>',
+    ''
+  ]);
 
   const [formState, setFormState] = useState({ name: '', email: '', message: '' });
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
 
   useEffect(() => {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setDarkMode(true);
-    }
-
+    // Remove the auto-detection of dark mode preference since we want dark mode by default
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === '`' || e.key === '~') {
+        e.preventDefault();
+        setShowTerminal(prev => !prev);
+      }
+      if (e.key === 'Escape' && showTerminal) {
+        setShowTerminal(false);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyPress);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [showTerminal]);
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
+
+  const handleTerminalCommand = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      const cmd = command.trim().toLowerCase();
+      const output = [...terminalOutput];
+      output.push(`<span class="text-teal-400">$</span> ${command}`);
+
+      switch(cmd) {
+        case 'help':
+          output.push('<span class="text-slate-300">Available commands:</span>');
+          output.push('  <span class="text-teal-400">about</span>     - Learn about Pankaj');
+          output.push('  <span class="text-teal-400">skills</span>    - View technical skills');
+          output.push('  <span class="text-teal-400">projects</span>  - List all projects');
+          output.push('  <span class="text-teal-400">contact</span>   - Get contact information');
+          output.push('  <span class="text-teal-400">social</span>    - View social media links');
+          output.push('  <span class="text-teal-400">resume</span>    - Download resume');
+          output.push('  <span class="text-teal-400">clear</span>     - Clear terminal');
+          output.push('  <span class="text-teal-400">exit</span>      - Close terminal');
+          break;
+        case 'about':
+          output.push('<span class="text-slate-300">👨‍💻 Pankaj Yadav</span>');
+          output.push('<span class="text-slate-400">Software Engineering Student at SRM University AP</span>');
+          output.push('<span class="text-slate-400">Specializing in full-stack development and AI-powered solutions</span>');
+          break;
+        case 'skills':
+          output.push('<span class="text-teal-400">Languages:</span> <span class="text-slate-300">C, C++, Python, JavaScript, SQL</span>');
+          output.push('<span class="text-teal-400">Web & Mobile:</span> <span class="text-slate-300">React, Node.js, Express, React Native, Tailwind CSS</span>');
+          output.push('<span class="text-teal-400">Database & Cloud:</span> <span class="text-slate-300">MongoDB, MySQL, Azure, GCP, Docker</span>');
+          break;
+        case 'projects':
+          output.push('<span class="text-slate-300">Featured Projects:</span>');
+          output.push('  1. <span class="text-teal-400">AI Tutor MVP</span> - AI-driven tutoring platform');
+          output.push('  2. <span class="text-teal-400">BeyondChats</span> - AI-powered PDF learning platform');
+          output.push('  3. <span class="text-teal-400">ElderCare</span> - MERN-based eldercare solution');
+          output.push('  4. <span class="text-teal-400">Agri-Connect</span> - Multilingual AI agricultural marketplace');
+          break;
+        case 'contact':
+          output.push('<span class="text-teal-400">Email:</span> <span class="text-slate-300">pankajyadsv08@gmail.com</span>');
+          output.push('<span class="text-teal-400">Location:</span> <span class="text-slate-300">India</span>');
+          break;
+        case 'social':
+          output.push('<span class="text-teal-400">GitHub:</span> <span class="text-slate-300">github.com/pankajydv07</span>');
+          output.push('<span class="text-teal-400">LinkedIn:</span> <span class="text-slate-300">linkedin.com/in/pankaj-yadav-67b26a291</span>');
+          break;
+        case 'resume':
+          output.push('<span class="text-green-400">✓ Opening resume...</span>');
+          setTimeout(() => window.open('/resume.pdf', '_blank'), 500);
+          break;
+        case 'clear':
+          setTerminalOutput([]);
+          setCommand('');
+          return;
+        case 'exit':
+          setShowTerminal(false);
+          setCommand('');
+          return;
+        case '':
+          break;
+        default:
+          output.push(`<span class="text-red-400">Command not found: ${cmd}</span>`);
+          output.push('<span class="text-slate-400">Type "help" for available commands</span>');
+      }
+
+      output.push('');
+      setTerminalOutput(output);
+      setCommand('');
+    }
+  };
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -263,13 +367,17 @@ export default function Portfolio() {
   };
 
   return (
-    <div className={"min-h-screen transition-colors duration-500 " + (darkMode ? 'dark bg-[#0a192f]' : 'bg-slate-50')}>
-      <div className="min-h-screen text-slate-900 dark:text-slate-300 font-sans selection:bg-teal-300/50 dark:selection:bg-teal-900/50 cursor-none-forced-md">
+    <div className={"min-h-screen transition-colors duration-500 relative " + (darkMode ? 'dark' : '')}>
+      {/* Background layer - Using soft grayish-blue for light mode */}
+      <div className={"fixed inset-0 -z-10 " + (darkMode ? 'bg-[#0a192f]' : 'bg-[#e8eef3]')} />
+      
+      <div className="min-h-screen text-slate-900 dark:text-slate-300 font-sans selection:bg-teal-300/50 dark:selection:bg-teal-900/50 cursor-none-forced-md relative z-10">
         
+        <ParticleBackground />
         <CustomCursor />
 
         <header 
-          className={"fixed top-0 left-0 right-0 z-40 transition-all duration-500 " + (isScrolled ? 'py-4 bg-white/80 dark:bg-[#0a192f]/90 backdrop-blur-lg shadow-sm dark:shadow-slate-900/20' : 'py-6 bg-transparent')}
+          className={"fixed top-0 left-0 right-0 z-40 transition-all duration-500 " + (isScrolled ? 'py-4 bg-[#e8eef3]/95 dark:bg-[#0a192f]/90 backdrop-blur-lg shadow-sm dark:shadow-slate-900/20' : 'py-6 bg-transparent')}
         >
           <div className="max-w-6xl mx-auto px-6 md:px-12 flex items-center justify-between">
             <motion.a 
@@ -295,7 +403,7 @@ export default function Portfolio() {
               <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}><NavLink href="#skills">Skills</NavLink></motion.div>
               <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}><NavLink href="#contact">Contact</NavLink></motion.div>
               
-              {/* <motion.button
+              <motion.button
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.6 }}
@@ -304,7 +412,7 @@ export default function Portfolio() {
                 aria-label="Toggle Dark Mode"
               >
                 {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-              </motion.button> */}
+              </motion.button>
 
               <motion.a 
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -587,13 +695,13 @@ export default function Portfolio() {
 
                   <div className={"col-span-12 md:col-span-6 relative pointer-events-none md:pointer-events-auto z-10 " + (index % 2 === 1 ? 'md:col-start-1 row-start-1' : 'md:col-start-7 row-start-1')}>
                     <p className="font-mono text-teal-500 text-sm mb-2">Featured Project</p>
-                    <h3 className="text-2xl font-bold mb-4 text-slate-100">
-                      <a href={project.link} target="_blank" rel="noreferrer" className="hover:text-teal-500 transition-colors md:text-slate-900 dark:md:text-slate-100 text-white">
+                    <h3 className="text-2xl font-bold mb-4">
+                      <a href={project.link} target="_blank" rel="noreferrer" className="hover:text-teal-500 transition-colors text-slate-900 dark:text-slate-100">
                         {project.title}
                       </a>
                     </h3>
                     
-                    <div className="bg-[#112240] p-6 rounded shadow-xl text-slate-400 text-sm md:text-base mb-4 hover:shadow-2xl transition-shadow">
+                    <div className="bg-slate-100 dark:bg-[#112240] p-6 rounded shadow-xl text-slate-700 dark:text-slate-400 text-sm md:text-base mb-4 hover:shadow-2xl transition-shadow">
                       {project.description}
                     </div>
 
@@ -617,6 +725,7 @@ export default function Portfolio() {
 
           <section id="skills" className="py-24 md:py-32 max-w-4xl mx-auto">
              <SectionHeading number="04">Other Skills</SectionHeading>
+             
              <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
                 {Object.entries(skills).map(([category, items], catIndex) => (
                   <motion.div 
@@ -738,6 +847,92 @@ export default function Portfolio() {
              </div>
           </motion.div>
         </footer>
+
+        {/* Terminal Easter Egg */}
+        <AnimatePresence>
+          {showTerminal && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 bg-black/95 backdrop-blur-sm z-[100] flex items-center justify-center p-4"
+              onClick={() => setShowTerminal(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="w-full max-w-4xl h-[600px] bg-[#1e1e1e] rounded-lg shadow-2xl overflow-hidden flex flex-col"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Terminal Header */}
+                <div className="bg-[#323233] px-4 py-3 flex items-center justify-between border-b border-slate-700">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-2">
+                      <button 
+                        onClick={() => setShowTerminal(false)}
+                        className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors"
+                      />
+                      <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                      <div className="w-3 h-3 rounded-full bg-green-500" />
+                    </div>
+                    <span className="ml-4 text-slate-400 text-sm font-mono">pankaj@portfolio:~</span>
+                  </div>
+                  <button
+                    onClick={() => setShowTerminal(false)}
+                    className="text-slate-400 hover:text-slate-100 transition-colors"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+
+                {/* Terminal Body */}
+                <div className="flex-1 overflow-auto p-4 font-mono text-sm">
+                  <div className="space-y-1">
+                    {terminalOutput.map((line, i) => (
+                      <div key={i} dangerouslySetInnerHTML={{ __html: line }} className="text-slate-300" />
+                    ))}
+                  </div>
+
+                  {/* Command Input */}
+                  <div className="flex items-center gap-2 mt-2">
+                    <span className="text-teal-400">$</span>
+                    <input
+                      type="text"
+                      value={command}
+                      onChange={(e) => setCommand(e.target.value)}
+                      onKeyDown={handleTerminalCommand}
+                      className="flex-1 bg-transparent border-none outline-none text-slate-100 font-mono"
+                      placeholder="Type a command..."
+                      autoFocus
+                    />
+                  </div>
+                </div>
+
+                {/* Terminal Footer */}
+                <div className="bg-[#323233] px-4 py-2 text-xs text-slate-500 font-mono border-t border-slate-700">
+                  Press <kbd className="px-2 py-1 bg-slate-700 rounded text-slate-300">ESC</kbd> or <kbd className="px-2 py-1 bg-slate-700 rounded text-slate-300">`</kbd> to close
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Terminal Trigger Button */}
+        {!showTerminal && (
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2 }}
+            onClick={() => setShowTerminal(true)}
+            className="fixed bottom-6 left-6 z-50 px-3 py-2 bg-slate-800/80 backdrop-blur-sm text-slate-400 hover:text-teal-400 rounded-lg text-xs font-mono border border-slate-700 hover:border-teal-500 transition-all shadow-lg hover:shadow-teal-500/20 flex items-center gap-2"
+            title="Open Terminal (Press `)"
+          >
+            <span className="text-teal-400">$</span> terminal
+          </motion.button>
+        )}
       </div>
     </div>
   );
