@@ -5,13 +5,15 @@ import {
   Github,
   Linkedin,
   Mail,
-  Twitter,
   ExternalLink,
   Menu,
   X,
   ArrowRight,
+  ChevronDown,
+  ChevronUp,
   Moon,
-  Sun
+  Sun,
+  Trophy
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ParticleBackground from '../components/ParticleBackground';
@@ -30,6 +32,33 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
+    title: "Autonomous Multi-Agent GitHub Issue Resolver",
+    description: "Distributed multi-agent system that processes repository issues, generates code and test cases, and orchestrates async developer workflows with Redis-backed queues.",
+    tags: ["Python", "Node.js", "PostgreSQL", "Redis", "GraphQL", "Docker"],
+    link: "https://github.com/pankajydv07/Autonomous-Multi-Agent-GitHub-Issue-Resolver",
+    github: "https://github.com/pankajydv07/Autonomous-Multi-Agent-GitHub-Issue-Resolver"
+  },
+  {
+    id: 2,
+    title: "RevAI: PDF Intelligence Platform",
+    description: "Document intelligence platform for PDF uploads, structured extraction, and retrieval with pgvector-backed relevance for real study and revision workflows.",
+    tags: ["React", "Node.js", "Supabase", "OpenAI", "PostgreSQL"],
+    link: "https://beyondchats-revision-app.vercel.app",
+    github: "https://github.com/pankajydv07/RevAI-Revision-App"
+  },
+  {
+    id: 3,
+    title: "AI Resume Engineering System",
+    description: "Multi-tenant resume engineering platform with AI-assisted workflows, version control, deployment automation, and structured resume iteration tools.",
+    tags: ["Next.js", "NestJS", "PostgreSQL", "Docker", "Nebius AI"],
+    link: "https://ai-resume-engineing.vercel.app",
+    github: "https://github.com/pankajydv07/AI_Resume_Engineering"
+  }
+];
+
+const moreProjects: Project[] = [
+  {
+    id: 4,
     title: "AI Tutor MVP",
     description: "AI-driven tutoring platform with step-by-step explanations, animated lessons, and multilingual text-to-speech for interactive learning.",
     tags: ["React", "Node.js", "MongoDB", "Nebius AI", "Manim"],
@@ -37,7 +66,7 @@ const projects: Project[] = [
     github: "https://github.com/ujjwalpan001/Solveit_AI"
   },
   {
-    id: 2,
+    id: 5,
     title: "BeyondChats",
     description: "AI-powered PDF learning platform with ChatGPT-style conversations, dynamic quiz generation, and progress tracking for students.",
     tags: ["React", "RAG", "AI Integration", "PDF Processing"],
@@ -45,7 +74,7 @@ const projects: Project[] = [
     github: "https://github.com/pankajydv07/beyondchats-revision-app"
   },
   {
-    id: 3,
+    id: 6,
     title: "ElderCare Support Platform",
     description: "MERN-based eldercare solution with real-time health monitoring, emergency alerts, and community engagement forums.",
     tags: ["React", "Node.js", "MongoDB", "Redux", "Tailwind CSS"],
@@ -53,7 +82,7 @@ const projects: Project[] = [
     github: "https://github.com/pankajydv07/ElderCare-Support"
   },
   {
-    id: 4,
+    id: 7,
     title: "Agri-Connect",
     description: "Multilingual AI-powered agricultural marketplace with GPT-powered voice assistant supporting English, Hindi, and Telugu.",
     tags: ["React", "Node.js", "OpenAI", "Speech-to-Text"],
@@ -67,21 +96,6 @@ const skills = {
   "Web & Mobile": ["React", "Node.js", "Express", "React Native", "Tailwind CSS", "REST APIs"],
   "Database & Cloud": ["MongoDB", "MySQL", "Azure", "GCP", "Vercel", "Docker"]
 };
-
-const skillLevels = [
-  { name: "JavaScript", level: 90 },
-  { name: "React", level: 88 },
-  { name: "Node.js", level: 85 },
-  { name: "Python", level: 82 },
-  { name: "MongoDB", level: 80 },
-  { name: "Tailwind CSS", level: 90 },
-  { name: "Express", level: 83 },
-  { name: "SQL", level: 78 },
-  { name: "Azure/GCP", level: 75 },
-  { name: "REST APIs", level: 87 },
-  { name: "React Native", level: 80 },
-  { name: "Docker", level: 72 }
-];
 
 interface Experience {
   id: number;
@@ -114,6 +128,40 @@ const experiences: Experience[] = [
       "Implemented JWT-secured authentication and responsive UI, improving platform reliability for diverse user roles"
     ],
     technologies: ["React", "Node.js", "MongoDB", "Express", "JWT", "Redux"]
+  }
+];
+
+interface Achievement {
+  id: number;
+  title: string;
+  detail: string;
+  highlight: string;
+}
+
+const achievements: Achievement[] = [
+  {
+    id: 1,
+    title: "Open Source Contributor, Hacktoberfest 2025",
+    detail: "Contributed 6+ accepted pull requests to active repositories, improving functionality and code quality.",
+    highlight: "Super Contributor Badge"
+  },
+  {
+    id: 2,
+    title: "Top Finalist, Code Spark - KBN College 2025",
+    detail: "Ranked among top finalists while building and iterating on a scalable solution under strict time and product constraints.",
+    highlight: "370+ teams"
+  },
+  {
+    id: 3,
+    title: "Winner, Code4Change Hackathon 2025",
+    detail: "Built Agri-Connect, a full-stack platform enabling structured agriculture workflows and solving real user problems.",
+    highlight: "KL University"
+  },
+  {
+    id: 4,
+    title: "Winner, Secure X BSI Hackathon 2024",
+    detail: "Built a phishing detection system focused on practical implementation and reliable real-world usage.",
+    highlight: "95% accuracy"
   }
 ];
 
@@ -227,6 +275,7 @@ export default function Portfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true); // Default to dark mode
   const [showTerminal, setShowTerminal] = useState(false);
+  const [showMoreProjects, setShowMoreProjects] = useState(false);
   const [command, setCommand] = useState('');
   const [terminalOutput, setTerminalOutput] = useState<string[]>([
     '<span class="text-teal-400">Welcome to Pankaj\'s Portfolio Terminal v1.0</span>',
@@ -291,11 +340,14 @@ export default function Portfolio() {
           output.push('<span class="text-teal-400">Database & Cloud:</span> <span class="text-slate-300">MongoDB, MySQL, Azure, GCP, Docker</span>');
           break;
         case 'projects':
-          output.push('<span class="text-slate-300">Featured Projects:</span>');
-          output.push('  1. <span class="text-teal-400">AI Tutor MVP</span> - AI-driven tutoring platform');
-          output.push('  2. <span class="text-teal-400">BeyondChats</span> - AI-powered PDF learning platform');
-          output.push('  3. <span class="text-teal-400">ElderCare</span> - MERN-based eldercare solution');
-          output.push('  4. <span class="text-teal-400">Agri-Connect</span> - Multilingual AI agricultural marketplace');
+          output.push('<span class="text-slate-300">Latest Projects:</span>');
+          projects.forEach((project, index) => {
+            output.push(`  ${index + 1}. <span class="text-teal-400">${project.title}</span> - ${project.tags.slice(0, 3).join(', ')}`);
+          });
+          output.push('<span class="text-slate-300">Older Projects:</span>');
+          moreProjects.forEach((project, index) => {
+            output.push(`  ${index + 1}. <span class="text-teal-400">${project.title}</span> - ${project.tags.slice(0, 3).join(', ')}`);
+          });
           break;
         case 'contact':
           output.push('<span class="text-teal-400">Email:</span> <span class="text-slate-300">pankajyadsv08@gmail.com</span>');
@@ -401,12 +453,13 @@ export default function Portfolio() {
               <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}><NavLink href="#experience">Experience</NavLink></motion.div>
               <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}><NavLink href="#work">Work</NavLink></motion.div>
               <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}><NavLink href="#skills">Skills</NavLink></motion.div>
-              <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}><NavLink href="#contact">Contact</NavLink></motion.div>
+              <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}><NavLink href="#achievements">Achievements</NavLink></motion.div>
+              <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}><NavLink href="#contact">Contact</NavLink></motion.div>
               
               <motion.button
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6 }}
+                transition={{ delay: 0.7 }}
                 onClick={toggleDarkMode}
                 className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-teal-400"
                 aria-label="Toggle Dark Mode"
@@ -417,7 +470,7 @@ export default function Portfolio() {
               <motion.a 
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.7 }}
+                transition={{ delay: 0.8 }}
                 href="/resume.pdf" 
                 download="Pankaj_Yadav_Resume.pdf"
                 className="px-4 py-2 text-sm font-mono text-teal-600 dark:text-teal-300 border border-teal-600 dark:border-teal-300 rounded hover:bg-teal-500/10 transition-colors"
@@ -457,6 +510,7 @@ export default function Portfolio() {
                 <NavLink isMobile href="#experience" onClick={() => setMobileMenuOpen(false)}>Experience</NavLink>
                 <NavLink isMobile href="#work" onClick={() => setMobileMenuOpen(false)}>Work</NavLink>
                 <NavLink isMobile href="#skills" onClick={() => setMobileMenuOpen(false)}>Skills</NavLink>
+                <NavLink isMobile href="#achievements" onClick={() => setMobileMenuOpen(false)}>Achievements</NavLink>
                 <NavLink isMobile href="#contact" onClick={() => setMobileMenuOpen(false)}>Contact</NavLink>
                 <a href="/resume.pdf" download="Pankaj_Yadav_Resume.pdf" className="mt-8 px-8 py-4 text-lg font-mono text-teal-500 border border-teal-500 rounded hover:bg-teal-500/10 transition-colors">
                   Resume
@@ -483,7 +537,7 @@ export default function Portfolio() {
                 I build things for the web.
               </motion.h2>
               <motion.p variants={fadeInUp} className="max-w-xl text-lg text-slate-600 dark:text-slate-400 leading-relaxed pt-4">
-                I'm a software engineering student at <span className="text-teal-500">SRM University AP</span>, specializing in full-stack development and AI-powered solutions. Currently exploring the intersection of web technologies and artificial intelligence.
+                I&apos;m a software engineering student at <span className="text-teal-500">SRM University AP</span>, specializing in full-stack development and AI-powered solutions. Currently exploring the intersection of web technologies and artificial intelligence.
               </motion.p>
               
               <motion.div variants={fadeInUp} className="pt-10 flex items-center gap-6">
@@ -512,13 +566,13 @@ export default function Portfolio() {
                 className="space-y-6 text-slate-600 dark:text-slate-400 leading-relaxed text-lg"
               >
                 <p>
-                  Hello! I'm Pankaj, a Computer Science Engineering student at SRM University AP with a passion for building impactful web applications. My journey in software development started with curiosity about how websites work, and it quickly evolved into building full-stack solutions that solve real-world problems.
+                  Hello! I&apos;m Pankaj, a Computer Science Engineering student at SRM University AP with a passion for building impactful web applications. My journey in software development started with curiosity about how websites work, and it quickly evolved into building full-stack solutions that solve real-world problems.
                 </p>
                 <p>
-                  I've had the privilege of interning at <span className="text-teal-500">SmartBridge</span> as a Salesforce Developer and <span className="text-teal-500">Edunet Foundation</span> as a Full-Stack Developer. My focus is on creating accessible, user-friendly applications that make a difference.
+                  I&apos;ve had the privilege of interning at <span className="text-teal-500">SmartBridge</span> as a Salesforce Developer and <span className="text-teal-500">Edunet Foundation</span> as a Full-Stack Developer. My focus is on creating accessible, user-friendly applications that make a difference.
                 </p>
                 <p>
-                  Here are a few technologies I've been working with recently:
+                  Here are a few technologies I&apos;ve been working with recently:
                 </p>
                 <ul className="grid grid-cols-2 gap-2 font-mono text-sm">
                   {[ 'JavaScript', 'React', 'Node.js', 'MongoDB', 'Python', 'Salesforce' ].map(tech => (
@@ -598,7 +652,7 @@ export default function Portfolio() {
           </section>
 
           <section id="experience" className="py-24 md:py-32">
-            <SectionHeading number="02">Where I've Worked</SectionHeading>
+            <SectionHeading number="02">Where I&apos;ve Worked</SectionHeading>
             <div className="max-w-3xl">
               {experiences.map((experience, index) => (
                 <motion.div
@@ -651,7 +705,7 @@ export default function Portfolio() {
           </section>
 
           <section id="work" className="py-24 md:py-32">
-            <SectionHeading number="03">Some Things I've Built</SectionHeading>
+            <SectionHeading number="03">Some Things I&apos;ve Built</SectionHeading>
             <ul className="space-y-24 md:space-y-32">
               {projects.map((project, index) => (
                 <motion.li 
@@ -665,28 +719,38 @@ export default function Portfolio() {
                   <div className={"col-span-12 md:col-span-7 relative h-[300px] md:h-[360px] " + (index % 2 === 1 ? 'md:col-start-6 row-start-1' : 'md:col-start-1 row-start-1')}>
                      <a href={project.link} target="_blank" rel="noreferrer" className="w-full h-full block group relative rounded overflow-hidden bg-teal-500/30">
                         <div className="absolute inset-0 flex items-center justify-center bg-slate-200 dark:bg-[#112240] group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0 mix-blend-multiply dark:mix-blend-luminosity group-hover:mix-blend-normal">
-                          {project.id === 1 ? (
-                            // AI Tutor MVP - Brain/Robot icon with float animation
+                          {project.title === "Autonomous Multi-Agent GitHub Issue Resolver" ? (
+                            <div className="icon-float icon-pulse">
+                              <i className="fas fa-robot text-[140px] text-teal-500"></i>
+                            </div>
+                          ) : project.title === "RevAI: PDF Intelligence Platform" ? (
+                            <div className="icon-bounce icon-pulse">
+                              <i className="fas fa-file-pdf text-[140px] text-teal-500"></i>
+                            </div>
+                          ) : project.title === "AI Resume Engineering System" ? (
+                            <div className="icon-float icon-pulse">
+                              <i className="fas fa-file-lines text-[140px] text-teal-500"></i>
+                            </div>
+                          ) : project.title === "AI Tutor MVP" ? (
                             <div className="icon-float icon-pulse">
                               <i className="fas fa-brain text-[140px] text-teal-500"></i>
                             </div>
-                          ) : project.id === 2 ? (
-                            // BeyondChats - Animated chat icon
+                          ) : project.title === "BeyondChats" ? (
                             <div dangerouslySetInnerHTML={{
                               __html: `<animated-icons src="https://animatedicons.co/get-icon?name=chat&style=minimalistic&token=aa724904-12c8-4d99-a7a1-cca76b7ddec0" trigger="loop" attributes='{"variationThumbColour":"#536DFE","variationName":"Two Tone","variationNumber":2,"numberOfGroups":2,"backgroundIsGroup":false,"strokeWidth":1,"defaultColours":{"group-1":"#000000","group-2":"#536DFE","background":"#FFFFFF"}}' height="200" width="200"></animated-icons>`
                             }} />
-                          ) : project.id === 3 ? (
-                            // ElderCare - Heartbeat icon with pulse animation
+                          ) : project.title === "ElderCare Support Platform" ? (
                             <div className="icon-heartbeat icon-pulse">
                               <i className="fas fa-heartbeat text-[140px] text-teal-500"></i>
                             </div>
-                          ) : project.id === 4 ? (
-                            // Agri-Connect - Wheat/Seedling icon with bounce animation
+                          ) : project.title === "Agri-Connect" ? (
                             <div className="icon-bounce icon-pulse">
                               <i className="fas fa-seedling text-[140px] text-teal-500"></i>
                             </div>
                           ) : (
-                            <div className="w-20 h-20 border-2 border-slate-400 dark:border-slate-600 border-dashed rounded-full" />
+                            <div className="flex h-32 w-32 items-center justify-center rounded border border-teal-500/40 bg-teal-500/10 font-mono text-4xl font-bold text-teal-500">
+                              {project.title.split(" ").slice(0, 2).map(word => word[0]).join("")}
+                            </div>
                           )}
                         </div>
                         <div className="absolute inset-0 bg-teal-900/30 dark:bg-teal-500/20 group-hover:bg-transparent transition-colors duration-300" />
@@ -721,6 +785,81 @@ export default function Portfolio() {
                 </motion.li>
               ))}
             </ul>
+
+            <div className="mt-16 md:mt-20 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setShowMoreProjects((current) => !current)}
+                aria-expanded={showMoreProjects}
+                aria-controls="more-projects"
+                className="group inline-flex items-center gap-3 rounded border border-teal-500 px-6 py-3 font-mono text-sm text-teal-600 transition-all hover:bg-teal-500/10 active:scale-95 dark:text-teal-300"
+              >
+                {showMoreProjects ? "Show fewer projects" : "View more projects"}
+                <motion.span
+                  animate={{ y: showMoreProjects ? -2 : 2 }}
+                  transition={{ duration: 0.25 }}
+                  className="inline-flex"
+                >
+                  {showMoreProjects ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                </motion.span>
+              </button>
+            </div>
+
+            <AnimatePresence initial={false}>
+              {showMoreProjects && (
+                <motion.div
+                  id="more-projects"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.45, ease: "easeInOut" }}
+                  className="overflow-hidden"
+                >
+                  <motion.div
+                    initial={{ y: 24 }}
+                    animate={{ y: 0 }}
+                    exit={{ y: 16 }}
+                    transition={{ duration: 0.45, ease: "easeOut" }}
+                    className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2"
+                  >
+                    {moreProjects.map((project, index) => (
+                      <motion.article
+                        key={project.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.35, delay: index * 0.06 }}
+                        className="group rounded border border-slate-200/80 bg-slate-100/70 p-6 transition-all hover:-translate-y-1 hover:border-teal-500/50 hover:bg-slate-100 dark:border-slate-700/80 dark:bg-[#112240]/70 dark:hover:bg-[#112240]"
+                      >
+                        <div className="mb-5 flex items-start justify-between gap-4">
+                          <p className="font-mono text-xs uppercase tracking-widest text-teal-600 dark:text-teal-300">
+                            Older Project
+                          </p>
+                          <div className="flex items-center gap-3">
+                            <a href={project.github} target="_blank" rel="noreferrer" className="text-slate-600 transition-colors hover:text-teal-500 dark:text-slate-300 dark:hover:text-teal-300" aria-label={`${project.title} GitHub repository`}>
+                              <Github size={20} />
+                            </a>
+                            <a href={project.link} target="_blank" rel="noreferrer" className="text-slate-600 transition-colors hover:text-teal-500 dark:text-slate-300 dark:hover:text-teal-300" aria-label={`${project.title} live link`}>
+                              <ExternalLink size={20} />
+                            </a>
+                          </div>
+                        </div>
+                        <h3 className="mb-3 text-xl font-bold text-slate-900 transition-colors group-hover:text-teal-600 dark:text-slate-100 dark:group-hover:text-teal-300">
+                          {project.title}
+                        </h3>
+                        <p className="mb-5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                          {project.description}
+                        </p>
+                        <ul className="flex flex-wrap gap-x-4 gap-y-2 font-mono text-xs text-slate-500 dark:text-slate-400">
+                          {project.tags.map((tag) => (
+                            <li key={tag}>{tag}</li>
+                          ))}
+                        </ul>
+                      </motion.article>
+                    ))}
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </section>
 
           <section id="skills" className="py-24 md:py-32 max-w-4xl mx-auto">
@@ -736,7 +875,7 @@ export default function Portfolio() {
                     transition={{ delay: catIndex * 0.2, duration: 0.5 }}
                   >
                     <h4 className="text-lg font-bold mb-6 text-slate-900 dark:text-slate-100 flex items-center justify-center sm:justify-start gap-2">
-                      <span className="text-teal-500">//</span> {category}
+                      <span className="text-teal-500">{"//"}</span> {category}
                     </h4>
                     <ul className="space-y-2.5 font-mono text-sm">
                       {items.map(skill => (
@@ -750,6 +889,35 @@ export default function Portfolio() {
              </div>
           </section>
 
+          <section id="achievements" className="py-24 md:py-32">
+            <SectionHeading number="05">Achievements</SectionHeading>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {achievements.map((achievement, index) => (
+                <motion.article
+                  key={achievement.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.45, delay: index * 0.08 }}
+                  className="group relative overflow-hidden rounded border border-slate-200/80 bg-slate-100/60 p-6 transition-all hover:-translate-y-1 hover:border-teal-500/50 dark:border-slate-700/80 dark:bg-[#112240]/60"
+                >
+                  <div className="mb-5 flex items-center justify-between gap-4">
+                    <Trophy className="text-teal-500" size={24} />
+                    <span className="rounded bg-teal-500/10 px-3 py-1 font-mono text-xs text-teal-600 dark:text-teal-300">
+                      {achievement.highlight}
+                    </span>
+                  </div>
+                  <h3 className="mb-3 text-xl font-bold text-slate-900 dark:text-slate-100">
+                    {achievement.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                    {achievement.detail}
+                  </p>
+                </motion.article>
+              ))}
+            </div>
+          </section>
+
           <section id="contact" className="py-24 md:py-48 max-w-xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
@@ -757,10 +925,10 @@ export default function Portfolio() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <p className="text-teal-500 font-mono mb-4">05. What's Next?</p>
+              <p className="text-teal-500 font-mono mb-4">06. What&apos;s Next?</p>
               <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-100 mb-6">Get In Touch</h2>
               <p className="text-slate-600 dark:text-slate-400 mb-12 leading-relaxed">
-                Although I'm not currently looking for any new opportunities, my inbox is always open. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+                Although I&apos;m not currently looking for any new opportunities, my inbox is always open. Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!
               </p>
 
               {formStatus === 'success' ? (
