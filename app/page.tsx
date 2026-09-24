@@ -29,13 +29,32 @@ const projects: Project[] = [
   {
     id: 1,
     title: "Autonomous Multi-Agent GitHub Issue Resolver",
-    description: "Distributed multi-agent system that processes repository issues, generates code and test cases, and orchestrates async developer workflows with Redis-backed queues.",
+    description: "Distributed multi-agent system with 3 specialized agents (planner, executor, reviewer) to autonomously analyze GitHub issues, generate code changes, validate solutions, and submit pull requests end-to-end, with async task queues and Redis distributed locking.",
     tags: ["Python", "Node.js", "PostgreSQL", "Redis", "GraphQL", "Docker"],
     link: "https://github.com/pankajydv07/Autonomous-Multi-Agent-GitHub-Issue-Resolver",
     github: "https://github.com/pankajydv07/Autonomous-Multi-Agent-GitHub-Issue-Resolver"
   },
   {
     id: 2,
+    title: "AI Resume Engineering System",
+    description: "Constructed a full-stack application with NestJS REST APIs, Prisma ORM, and PostgreSQL across 2 decoupled service layers, applying an immutable versioning model to preserve complete resume history and data consistency, secured with JWT authentication and Docker containerization.",
+    tags: ["Next.js", "NestJS", "TypeScript", "PostgreSQL", "Prisma", "Docker"],
+    link: "https://ai-resume-engineering.vercel.app",
+    github: "https://github.com/pankajydv07/AI_Resume_Engineering"
+  },
+  {
+    id: 3,
+    title: "MediAgent",
+    description: "Clinical reasoning platform featuring an event-driven backend with FastAPI and Celery routing background workflows through Redis task queues, integrated with LangGraph multi-agent orchestration and WebSocket-based real-time clinical reasoning updates.",
+    tags: ["Python", "FastAPI", "Celery", "Redis", "PostgreSQL", "Next.js", "Docker"],
+    link: "https://github.com/pankajydv07/MediAgent",
+    github: "https://github.com/pankajydv07/MediAgent"
+  }
+];
+
+const moreProjects: Project[] = [
+  {
+    id: 4,
     title: "RevAI: PDF Intelligence Platform",
     description: "Document intelligence platform for PDF uploads, structured extraction, and retrieval with pgvector-backed relevance for real study and revision workflows.",
     tags: ["React", "Node.js", "Supabase", "OpenAI", "PostgreSQL"],
@@ -43,18 +62,7 @@ const projects: Project[] = [
     github: "https://github.com/pankajydv07/RevAI-Revision-App"
   },
   {
-    id: 3,
-    title: "AI Resume Engineering System",
-    description: "Multi-tenant resume engineering platform with AI-assisted workflows, version control, deployment automation, and structured resume iteration tools.",
-    tags: ["Next.js", "NestJS", "PostgreSQL", "Docker", "Nebius AI"],
-    link: "https://ai-resume-engineing.vercel.app",
-    github: "https://github.com/pankajydv07/AI_Resume_Engineering"
-  }
-];
-
-const moreProjects: Project[] = [
-  {
-    id: 4,
+    id: 5,
     title: "AI Tutor MVP",
     description: "AI-driven tutoring platform with step-by-step explanations, animated lessons, and multilingual text-to-speech for interactive learning.",
     tags: ["React", "Node.js", "MongoDB", "Nebius AI", "Manim"],
@@ -62,7 +70,7 @@ const moreProjects: Project[] = [
     github: "https://github.com/ujjwalpan001/Solveit_AI"
   },
   {
-    id: 5,
+    id: 6,
     title: "BeyondChats",
     description: "AI-powered PDF learning platform with ChatGPT-style conversations, dynamic quiz generation, and progress tracking for students.",
     tags: ["React", "RAG", "AI Integration", "PDF Processing"],
@@ -70,15 +78,15 @@ const moreProjects: Project[] = [
     github: "https://github.com/pankajydv07/beyondchats-revision-app"
   },
   {
-    id: 6,
+    id: 7,
     title: "ElderCare Support Platform",
-    description: "MERN-based eldercare solution with real-time health monitoring, emergency alerts, and community engagement forums.",
-    tags: ["React", "Node.js", "MongoDB", "Redux", "Tailwind CSS"],
+    description: "Full-stack Node.js, Express, and MongoDB Atlas support portal owning scoping, development, and production deployment across 3 distinct user roles with session-backed auth and RBAC.",
+    tags: ["Node.js", "Express", "MongoDB Atlas", "React", "REST APIs"],
     link: "https://eldercare-support.onrender.com/",
     github: "https://github.com/pankajydv07/ElderCare-Support"
   },
   {
-    id: 7,
+    id: 8,
     title: "Agri-Connect",
     description: "Multilingual AI-powered agricultural marketplace with GPT-powered voice assistant supporting English, Hindi, and Telugu.",
     tags: ["React", "Node.js", "OpenAI", "Speech-to-Text"],
@@ -88,9 +96,11 @@ const moreProjects: Project[] = [
 ];
 
 const skills = {
-  Languages: ["C", "C++", "Python", "JavaScript", "SQL"],
-  "Web & Mobile": ["React", "Node.js", "Express", "React Native", "Tailwind CSS", "REST APIs"],
-  "Database & Cloud": ["MongoDB", "MySQL", "Azure", "GCP", "Vercel", "Docker"]
+  "Agentic AI & LLMs": ["LangChain", "LangGraph", "RAG", "LLM Integration", "OpenAI API", "Prompt Engineering"],
+  "Full-Stack & APIs": ["React.js", "Next.js", "Node.js", "FastAPI", "REST APIs", "WebSockets"],
+  "Databases & DevOps": ["PostgreSQL", "MongoDB", "Redis", "Docker", "CI/CD (GitHub Actions)", "GCP"],
+  "Programming Languages": ["Python", "JavaScript/TypeScript", "Java", "C++", "SQL"],
+  "Core CS Fundamentals": ["DSA", "System Design", "OOP", "DBMS", "Operating Systems", "Computer Networks"]
 };
 
 interface Experience {
@@ -105,6 +115,17 @@ interface Experience {
 const experiences: Experience[] = [
   {
     id: 1,
+    company: "Centific Premier Hackathon 2.0",
+    role: "Agentic AI Participant (2-Week On-site Program)",
+    period: "Apr 2026 - May 2026",
+    description: [
+      "Engineered ReAct-based agentic workflows with tool calling and structured reasoning loops over OpenAI-compatible LLM pipelines, delivering production-ready AI solutions across multiple real-world problem statements.",
+      "Orchestrated LangGraph multi-agent pipelines integrated with FastAPI services, vector retrieval, multimodal AI systems, and Docker-containerized deployments across real-world engineering scenarios."
+    ],
+    technologies: ["LangGraph", "FastAPI", "Docker", "Vector Retrieval", "LLM Tool Calling", "Python"]
+  },
+  {
+    id: 2,
     company: "SmartBridge (Salesforce Partner)",
     role: "Salesforce Developer Intern",
     period: "May 2025 - July 2025",
@@ -115,15 +136,15 @@ const experiences: Experience[] = [
     technologies: ["Salesforce", "Apex", "Lightning Web Components", "Process Automation"]
   },
   {
-    id: 2,
+    id: 3,
     company: "Edunet Foundation",
-    role: "Full-Stack Developer Intern",
-    period: "May 2024 - July 2024",
+    role: "Full Stack Developer Intern",
+    period: "May 2025 - July 2025",
     description: [
-      "Designed and deployed a MERN-based eldercare platform supporting 100+ simulated users with real-time health monitoring",
-      "Implemented JWT-secured authentication and responsive UI, improving platform reliability for diverse user roles"
+      "Delivered the ElderCare Support Portal end-to-end, a full-stack Node.js, Express, and MongoDB Atlas application, owning scoping, development, and production deployment across 3 distinct user roles.",
+      "Architected REST APIs with session-backed authentication and role-based access control across elder, volunteer, and admin user types, covering full CRUD request management and an admin analytics dashboard."
     ],
-    technologies: ["React", "Node.js", "MongoDB", "Express", "JWT", "Redux"]
+    technologies: ["Node.js", "Express", "MongoDB Atlas", "React", "REST APIs", "RBAC"]
   }
 ];
 
@@ -137,27 +158,39 @@ interface Achievement {
 const achievements: Achievement[] = [
   {
     id: 1,
-    title: "Open Source Contributor, Hacktoberfest 2025",
-    detail: "Contributed 6+ accepted pull requests to active repositories, improving functionality and code quality.",
-    highlight: "Super Contributor Badge"
+    title: "Selected, Amazon ML Summer School 2026",
+    detail: "Among top 3,000 of 1,34,421 applicants for Amazon's 6-week intensive ML program covering Supervised Learning, Deep Learning, Generative AI, and Reinforcement Learning.",
+    highlight: "Top 3,000 of 134k+"
   },
   {
     id: 2,
-    title: "Top Finalist, Code Spark - KBN College 2025",
-    detail: "Ranked among top finalists while building and iterating on a scalable solution under strict time and product constraints.",
-    highlight: "370+ teams"
+    title: "Runner-Up (2nd Place), Prakalp 2026",
+    detail: "Recognized among 200+ teams for building MediAgent, an agentic AI-powered clinical reasoning platform leveraging LangGraph orchestration and real-time retrieval pipelines.",
+    highlight: "2nd / 200+ teams"
   },
   {
     id: 3,
-    title: "Winner, Code4Change Hackathon 2025",
-    detail: "Built Agri-Connect, a full-stack platform enabling structured agriculture workflows and solving real user problems.",
-    highlight: "KL University"
+    title: "Open Source Contributor, Hacktoberfest 2025",
+    detail: "Merged 6+ accepted pull requests, improving backend functionality, documentation, and code quality across active open-source repositories.",
+    highlight: "Super Contributor"
   },
   {
     id: 4,
+    title: "Winner, Code4Change Hackathon 2025",
+    detail: "Built Agri-Connect at KL University, a full-stack platform ranked 1st for streamlining agricultural workflows and marketplaces through backend systems.",
+    highlight: "1st Place (KL University)"
+  },
+  {
+    id: 5,
+    title: "Winner / Top Finalist, Code Spark 2025",
+    detail: "Selected among top 3 finalists out of 370+ teams at KBN College for building and deploying a scalable full-stack software solution under strict time constraints.",
+    highlight: "Top 3 / 370+ teams"
+  },
+  {
+    id: 6,
     title: "Winner, Secure X BSI Hackathon 2024",
-    detail: "Built a phishing detection system focused on practical implementation and reliable real-world usage.",
-    highlight: "95% accuracy"
+    detail: "Led team to 1st place with an ML-based phishing detection system achieving 95% accuracy on real-world email datasets.",
+    highlight: "95% Accuracy (1st Place)"
   }
 ];
 
@@ -335,20 +368,21 @@ export default function Portfolio() {
           break;
         case 'about':
           output.push('<span class="text-slate-300">👨‍💻 Pankaj Yadav</span>');
-          output.push('<span class="text-slate-400">Software Engineering Student at SRM University AP</span>');
-          output.push('<span class="text-slate-400">Specializing in full-stack development and AI-powered solutions</span>');
+          output.push('<span class="text-slate-400">Computer Science Engineering Student at SRM University AP (CGPA: 8.88/10.0)</span>');
+          output.push('<span class="text-slate-400">Full Stack Developer | Python, Node.js, React.js & Agentic AI Systems</span>');
           break;
         case 'skills':
-          output.push('<span class="text-teal-400">Languages:</span> <span class="text-slate-300">C, C++, Python, JavaScript, SQL</span>');
-          output.push('<span class="text-teal-400">Web & Mobile:</span> <span class="text-slate-300">React, Node.js, Express, React Native, Tailwind CSS</span>');
-          output.push('<span class="text-teal-400">Database & Cloud:</span> <span class="text-slate-300">MongoDB, MySQL, Azure, GCP, Docker</span>');
+          output.push('<span class="text-teal-400">Agentic AI & LLMs:</span> <span class="text-slate-300">LangChain, LangGraph, RAG, Tool Calling, OpenAI API</span>');
+          output.push('<span class="text-teal-400">Full-Stack & APIs:</span> <span class="text-slate-300">Next.js, React, Node.js, FastAPI, REST APIs, WebSockets</span>');
+          output.push('<span class="text-teal-400">Databases & DevOps:</span> <span class="text-slate-300">PostgreSQL, MongoDB, Redis, Docker, GCP, GitHub Actions</span>');
+          output.push('<span class="text-teal-400">Languages:</span> <span class="text-slate-300">Python, TypeScript/JavaScript, Java, C++, SQL</span>');
           break;
         case 'projects':
-          output.push('<span class="text-slate-300">Latest Projects:</span>');
+          output.push('<span class="text-slate-300">Featured Projects:</span>');
           projects.forEach((project, index) => {
             output.push(`  ${index + 1}. <span class="text-teal-400">${project.title}</span> - ${project.tags.slice(0, 3).join(', ')}`);
           });
-          output.push('<span class="text-slate-300">Older Projects:</span>');
+          output.push('<span class="text-slate-300">More Projects:</span>');
           moreProjects.forEach((project, index) => {
             output.push(`  ${index + 1}. <span class="text-teal-400">${project.title}</span> - ${project.tags.slice(0, 3).join(', ')}`);
           });
@@ -541,10 +575,10 @@ export default function Portfolio() {
                 Pankaj Yadav.
               </motion.h1>
               <motion.h2 variants={fadeInUp} className="text-4xl md:text-7xl font-bold tracking-tight text-slate-600 dark:text-slate-400">
-                I build things for the web.
+                I build full-stack apps & agentic AI systems.
               </motion.h2>
               <motion.p variants={fadeInUp} className="max-w-xl text-lg text-slate-700 dark:text-slate-300 leading-relaxed pt-4">
-                I&apos;m a software engineering student at <span className="text-teal-600 dark:text-teal-400 font-semibold">SRM University AP</span>, specializing in full-stack development and AI-powered solutions. Currently exploring the intersection of web technologies and artificial intelligence.
+                I&apos;m a software engineering student at <span className="text-teal-600 dark:text-teal-400 font-semibold">SRM University AP</span>, specializing in full-stack engineering, Python/Node.js backend architectures, and autonomous agentic AI workflows.
               </motion.p>
               
               <motion.div variants={fadeInUp} className="pt-10 flex items-center gap-6">
@@ -573,16 +607,16 @@ export default function Portfolio() {
                 className="space-y-6 text-slate-700 dark:text-slate-300 leading-relaxed text-lg"
               >
                 <p>
-                  Hello! I&apos;m Pankaj, a Computer Science Engineering student at SRM University AP with a passion for building impactful web applications. My journey in software development started with curiosity about how websites work, and it quickly evolved into building full-stack solutions that solve real-world problems.
+                  Hello! I&apos;m Pankaj, a Computer Science Engineering student at SRM University AP with a passion for building robust full-stack applications and autonomous agentic AI systems. My work spans architecting distributed backends, LangGraph multi-agent pipelines, and modern web applications that solve real-world problems.
                 </p>
                 <p>
-                  I&apos;ve had the privilege of interning at <span className="text-teal-600 dark:text-teal-400 font-medium">SmartBridge</span> as a Salesforce Developer and <span className="text-teal-600 dark:text-teal-400 font-medium">Edunet Foundation</span> as a Full-Stack Developer. My focus is on creating accessible, user-friendly applications that make a difference.
+                  I&apos;ve engineered agentic AI workflows at <span className="text-teal-600 dark:text-teal-400 font-medium">Centific Premier Hackathon 2.0</span>, interned as a Salesforce Developer at <span className="text-teal-600 dark:text-teal-400 font-medium">SmartBridge</span>, and built full-stack solutions at <span className="text-teal-600 dark:text-teal-400 font-medium">Edunet Foundation</span>.
                 </p>
                 <p>
                   Here are a few technologies I&apos;ve been working with recently:
                 </p>
                 <ul className="grid grid-cols-2 gap-2 font-mono text-sm">
-                  {[ 'JavaScript', 'React', 'Node.js', 'MongoDB', 'Python', 'Salesforce' ].map(tech => (
+                  {[ 'TypeScript & Next.js', 'Python & FastAPI', 'LangGraph & Agentic AI', 'PostgreSQL & Redis', 'Docker & CI/CD', 'Node.js & Express' ].map(tech => (
                      <li key={tech} className="flex items-center gap-2 before:content-['▹'] before:text-teal-500">
                        {tech}
                      </li>
@@ -736,13 +770,13 @@ export default function Portfolio() {
                             <div className="icon-float icon-pulse">
                               <i className="fas fa-robot text-[140px] text-teal-500"></i>
                             </div>
-                          ) : project.title === "RevAI: PDF Intelligence Platform" ? (
-                            <div className="icon-bounce icon-pulse">
-                              <i className="fas fa-file-pdf text-[140px] text-teal-500"></i>
-                            </div>
                           ) : project.title === "AI Resume Engineering System" ? (
                             <div className="icon-float icon-pulse">
                               <i className="fas fa-file-lines text-[140px] text-teal-500"></i>
+                            </div>
+                          ) : project.title === "MediAgent" ? (
+                            <div className="icon-float icon-pulse">
+                              <i className="fas fa-notes-medical text-[140px] text-teal-500"></i>
                             </div>
                           ) : (
                             <div className="flex h-32 w-32 items-center justify-center rounded border border-teal-500/40 bg-teal-500/10 font-mono text-4xl font-bold text-teal-500">
@@ -839,7 +873,7 @@ export default function Portfolio() {
                       >
                         <div className="mb-5 flex items-start justify-between gap-4">
                           <p className="font-mono text-xs uppercase tracking-widest text-teal-600 dark:text-teal-300">
-                            Older Project
+                            Project
                           </p>
                           <div className="flex items-center gap-3">
                             <a href={project.github} target="_blank" rel="noreferrer" className="text-slate-600 transition-colors hover:text-teal-600 dark:text-slate-300 dark:hover:text-teal-300" aria-label={`${project.title} GitHub repository`}>
@@ -869,20 +903,20 @@ export default function Portfolio() {
             </AnimatePresence>
           </section>
 
-          <section id="skills" className="py-24 md:py-32 max-w-4xl mx-auto scroll-mt-24">
-             <SectionHeading number="04">Other Skills</SectionHeading>
+          <section id="skills" className="py-24 md:py-32 max-w-5xl mx-auto scroll-mt-24">
+             <SectionHeading number="04">Technical Skills</SectionHeading>
              
-             <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 text-center sm:text-left">
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 text-center sm:text-left">
                 {Object.entries(skills).map(([category, items], catIndex) => (
                   <motion.div 
                     key={category}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-20px" }}
-                    transition={{ delay: catIndex * 0.15, duration: 0.5 }}
-                    className="p-6 rounded-lg bg-slate-100/50 dark:bg-[#112240]/40 border border-slate-200/80 dark:border-slate-800"
+                    transition={{ delay: catIndex * 0.1, duration: 0.5 }}
+                    className="p-6 rounded-lg bg-slate-100/50 dark:bg-[#112240]/40 border border-slate-200/80 dark:border-slate-800 hover:border-teal-500/40 transition-colors"
                   >
-                    <h4 className="text-lg font-bold mb-6 text-slate-900 dark:text-slate-100 flex items-center justify-center sm:justify-start gap-2">
+                    <h4 className="text-lg font-bold mb-5 text-slate-900 dark:text-slate-100 flex items-center justify-center sm:justify-start gap-2">
                       <span className="text-teal-500">{"//"}</span> {category}
                     </h4>
                     <ul className="space-y-2.5 font-mono text-sm">
