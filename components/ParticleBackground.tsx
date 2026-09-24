@@ -13,6 +13,8 @@ const ParticleBackground = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    let animationFrameId: number;
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -28,7 +30,7 @@ const ParticleBackground = () => {
     }
 
     const particles: Particle[] = [];
-    const particleCount = 100; // Increased from 100
+    const particleCount = 80;
 
     for (let i = 0; i < particleCount; i++) {
       const x = Math.random() * canvas.width;
@@ -38,10 +40,10 @@ const ParticleBackground = () => {
         y,
         baseX: x,
         baseY: y,
-        radius: Math.random() * 3 + 1, // Increased size
+        radius: Math.random() * 2.5 + 1,
         color: '#14b8a6',
-        speedX: Math.random() * 1 - 0.5, // Faster movement
-        speedY: Math.random() * 1 - 0.5
+        speedX: Math.random() * 0.8 - 0.4,
+        speedY: Math.random() * 0.8 - 0.4
       });
     }
 
@@ -59,49 +61,42 @@ const ParticleBackground = () => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
-        ctx.globalAlpha = 0.5; // Increased opacity from 0.5
+        ctx.globalAlpha = 0.4;
         ctx.fill();
-        
-        // Add glow effect
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = '#14b8a6';
 
         // Draw connections
-        for (let j = i; j < particleCount; j++) {
+        for (let j = i + 1; j < particleCount; j++) {
           const p2 = particles[j];
-          const distance = Math.sqrt(
-            Math.pow(p.x - p2.x, 2) + 
-            Math.pow(p.y - p2.y, 2)
-          );
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < 150) { // Increased connection distance
+          if (distance < 140) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(20, 184, 166, ${0.3 - distance/600})`; // More visible lines
-            ctx.lineWidth = 1; // Thicker lines
+            ctx.strokeStyle = `rgba(20, 184, 166, ${0.25 - distance / 560})`;
+            ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         }
-        
-        ctx.shadowBlur = 0; // Reset shadow
 
         // Move particles
         p.x += p.speedX;
         p.y += p.speedY;
-        
-        // Mouse interaction - push particles away
+
+        // Mouse interaction - push particles away gently
         const dx = mouseRef.current.x - p.x;
         const dy = mouseRef.current.y - p.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        const forceDirectionX = dx / distance;
-        const forceDirectionY = dy / distance;
-        const maxDistance = 150;
-        const force = (maxDistance - distance) / maxDistance;
-        
-        if (distance < maxDistance) {
-          p.x -= forceDirectionX * force * 5;
-          p.y -= forceDirectionY * force * 5;
+        const maxDistance = 140;
+
+        if (distance < maxDistance && distance > 0) {
+          const forceDirectionX = dx / distance;
+          const forceDirectionY = dy / distance;
+          const force = (maxDistance - distance) / maxDistance;
+          p.x -= forceDirectionX * force * 3;
+          p.y -= forceDirectionY * force * 3;
         }
 
         // Bounce off edges
@@ -109,12 +104,13 @@ const ParticleBackground = () => {
         if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
       }
 
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     };
 
     animate();
 
     const handleResize = () => {
+      if (!canvas) return;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
@@ -122,6 +118,7 @@ const ParticleBackground = () => {
     window.addEventListener('resize', handleResize);
 
     return () => {
+      cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
     };
